@@ -1,11 +1,11 @@
-package pl.mkorcz.linkshortener;
+package pl.mkorcz.linkshortener.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.time.LocalDate;
 
-record LinkDto(String id, @JsonIgnore String email, String targetUrl, LocalDate expirationDate, int i) {
+public record LinkDto(String id, @JsonIgnore String email, String targetUrl, LocalDate expirationDate, int i) {
 
 
     public String getShortenedLink() {
