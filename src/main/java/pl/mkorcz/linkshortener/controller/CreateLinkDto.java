@@ -1,6 +1,7 @@
-package pl.mkorcz.linkshortener;
+package pl.mkorcz.linkshortener.controller;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import pl.mkorcz.linkshortener.dto.LinkDto;
 
 import java.time.LocalDate;
 
@@ -11,7 +12,7 @@ record CreateLinkDto(
         String targetUrl,
         LocalDate expirationDate) {
 
-    LinkDto toDo() {
+    LinkDto toDto() {
         return new LinkDto(
                 id,
                 email,
