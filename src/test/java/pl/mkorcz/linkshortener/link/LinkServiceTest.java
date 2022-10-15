@@ -15,8 +15,7 @@ class LinkServiceTest {
 
     @BeforeEach
     void setUp() {
-        linkService = new LinkServiceImpl();
-
+        linkService = new LinkServiceImpl(new LinkInMemoryRepository()) ;
     }
 
     @Test
