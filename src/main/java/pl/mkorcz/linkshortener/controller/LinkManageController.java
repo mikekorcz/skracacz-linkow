@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.mkorcz.linkshortener.dto.LinkDto;
 import pl.mkorcz.linkshortener.link.LinkService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/links")
 class LinkManageController {
@@ -19,7 +21,7 @@ class LinkManageController {
     @PostMapping
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public LinkDto createLink(@RequestBody CreateLinkDto link) {
+    public LinkDto createLink(@Valid @RequestBody CreateLinkDto link) {
         return linkService.createLink(link.toDto());
     }
 
