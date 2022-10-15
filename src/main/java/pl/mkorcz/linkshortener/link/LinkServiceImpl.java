@@ -1,21 +1,19 @@
 package pl.mkorcz.linkshortener.link;
 
+import io.swagger.v3.oas.models.links.Link;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mkorcz.linkshortener.dto.LinkDto;
-import pl.mkorcz.linkshortener.link.exceptions.DuplicateLinkException;
 import pl.mkorcz.linkshortener.link.exceptions.LinkAlreadyExistsException;
 import pl.mkorcz.linkshortener.link.exceptions.LinkNotFoundException;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Optional;
+import javax.transaction.Transactional;
 
 @AllArgsConstructor
 @Service
 public class LinkServiceImpl implements LinkService {
 
-    private LinkServiceRepository linkRepository;
+    private final LinkServiceRepository linkRepository;
 
     @Override
     public LinkDto createLink(final LinkDto toDto) {
@@ -27,11 +25,16 @@ public class LinkServiceImpl implements LinkService {
         return toDto;
     }
 
+    @Transactional
     @Override
-    public String gatherLink(final String id) {
+    public String gatherLinkAndIncrementVisits(final String id) {
         final LinkEntity linkEntity = linkRepository.findById(id)
-                        .orElseThrow(() -> new LinkNotFoundException(id));
+                .orElseThrow(() -> new LinkNotFoundException(id));
+        linkEntity.setVisits(linkEntity.getVisits() + 1);
 
         return linkEntity.getTargetUrl();
+
     }
+
+
 }
