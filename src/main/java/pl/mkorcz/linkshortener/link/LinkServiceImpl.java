@@ -1,5 +1,6 @@
 package pl.mkorcz.linkshortener.link;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mkorcz.linkshortener.dto.LinkDto;
 import pl.mkorcz.linkshortener.link.exceptions.DuplicateLinkException;
@@ -8,35 +9,29 @@ import pl.mkorcz.linkshortener.link.exceptions.LinkNotFoundException;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class LinkServiceImpl implements LinkService {
 
-    private final HashMap<String, LinkDto> linkRepository;
-
-    LinkServiceImpl() {
-        linkRepository = new HashMap<>();
-    }
-
+    private LinkServiceRepository linkRepository;
 
     @Override
     public LinkDto createLink(final LinkDto toDto) {
 
-        if (linkRepository.containsKey(toDto.id())) {
+        if (linkRepository.findById(toDto.id()).isPresent()) {
             throw new LinkAlreadyExistsException(toDto.id());
-        } else {
-            linkRepository.put(toDto.id(), toDto);
-            return toDto;
         }
-
+        linkRepository.save(LinkEntity.fromDto(toDto));
+        return toDto;
     }
 
     @Override
     public String gatherLink(final String id) {
-        LinkDto linkDto = linkRepository.get(id);
-        if (linkDto == null) {
-            throw new LinkNotFoundException(id);
-        }
-        return linkDto.targetUrl();
+        final LinkEntity linkEntity = linkRepository.findById(id)
+                        .orElseThrow(() -> new LinkNotFoundException(id));
+
+        return linkEntity.getTargetUrl();
     }
 }
