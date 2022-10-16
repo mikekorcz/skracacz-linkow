@@ -35,9 +35,16 @@ class LinkManageController {
 
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}")
-    LinkDto getLinksById(@PathVariable String id) {
+    @GetMapping("/getBy/{id}")
+    LinkDto getLinkById(@PathVariable String id) {
         return linkService.getLinkById(id);
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/deleteBy/{id}")
+    void deleteLinkById(@PathVariable String id) {
+        linkService.deleteLinkById(id);
     }
 
 
