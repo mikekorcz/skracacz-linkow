@@ -1,6 +1,5 @@
 package pl.mkorcz.linkshortener.link;
 
-import io.swagger.v3.oas.models.links.Link;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mkorcz.linkshortener.dto.LinkDto;
@@ -8,12 +7,14 @@ import pl.mkorcz.linkshortener.link.exceptions.LinkAlreadyExistsException;
 import pl.mkorcz.linkshortener.link.exceptions.LinkNotFoundException;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
 public class LinkServiceImpl implements LinkService {
 
-    private final LinkServiceRepository linkRepository;
+    private final LinkRepository linkRepository;
 
     @Override
     public LinkDto createLink(final LinkDto toDto) {
@@ -36,5 +37,11 @@ public class LinkServiceImpl implements LinkService {
 
     }
 
-
+    @Override
+    public List<LinkDto> getLinksFromHigherThan(final Integer visits) {
+        return linkRepository.findAllByVisitsGreaterThan(visits)
+                .stream()
+                .map(LinkEntity::toDto)
+                .collect(Collectors.toList());
+    }
 }
