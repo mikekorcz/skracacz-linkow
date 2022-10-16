@@ -52,5 +52,10 @@ public class LinkServiceImpl implements LinkService {
                         .toDto();
     }
 
+    @Override
+    public void deleteLinkById(final String id) {
+        linkRepository.deleteById(id);
+    }
+
 
 }

@@ -12,4 +12,6 @@ public interface LinkService {
     List<LinkDto> getLinksFromHigherThan(Integer visits);
 
     LinkDto getLinkById(String id);
+
+    void deleteLinkById(String id);
 }
