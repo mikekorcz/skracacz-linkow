@@ -2,11 +2,13 @@ package pl.mkorcz.linkshortener.link;
 
 import org.apache.commons.lang3.NotImplementedException;
 
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-class LinkInMemoryRepository implements LinkServiceRepository {
+class LinkInMemoryRepository implements LinkRepository {
 
     final Map<String, LinkEntity> entityMap;
 
@@ -19,9 +21,11 @@ class LinkInMemoryRepository implements LinkServiceRepository {
         return (S) entityMap.put(entity.getId(), entity);
     }
 
+
     @Override
     public <S extends LinkEntity> Iterable<S> saveAll(final Iterable<S> entities) {
-        throw new NotImplementedException();
+        entities.forEach(s -> save(s));
+        return entities;
     }
 
     @Override
@@ -51,26 +55,42 @@ class LinkInMemoryRepository implements LinkServiceRepository {
 
     @Override
     public void deleteById(final String s) {
+        throw new NotImplementedException();
 
     }
 
     @Override
     public void delete(final LinkEntity entity) {
+        throw new NotImplementedException();
 
     }
 
     @Override
     public void deleteAllById(final Iterable<? extends String> strings) {
+        throw new NotImplementedException();
 
     }
 
     @Override
     public void deleteAll(final Iterable<? extends LinkEntity> entities) {
+        throw new NotImplementedException();
 
     }
 
     @Override
     public void deleteAll() {
+        throw new NotImplementedException();
 
     }
+
+    @Override
+    public List<LinkEntity> findLinksBeforeDay(final LocalDate currentDate) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<LinkEntity> findAllByVisitsGreaterThan(final Integer visits) {
+        throw new NotImplementedException();
+    }
+
 }

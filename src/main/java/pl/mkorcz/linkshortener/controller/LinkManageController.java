@@ -7,6 +7,7 @@ import pl.mkorcz.linkshortener.dto.LinkDto;
 import pl.mkorcz.linkshortener.link.LinkService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/links")
@@ -23,6 +24,13 @@ class LinkManageController {
     @ResponseStatus(HttpStatus.CREATED)
     public LinkDto createLink(@Valid @RequestBody CreateLinkDto link) {
         return linkService.createLink(link.toDto());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/visits/{visits}")
+    List<LinkDto> getLinksForVisitsHigherThan(@PathVariable Integer visits) {
+        return linkService.getLinksFromHigherThan(visits);
     }
 
 
