@@ -44,4 +44,13 @@ public class LinkServiceImpl implements LinkService {
                 .map(LinkEntity::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public LinkDto getLinkById(final String id) {
+        return linkRepository.findById(id)
+                .orElseThrow(() -> new LinkNotFoundException(id))
+                        .toDto();
+    }
+
+
 }

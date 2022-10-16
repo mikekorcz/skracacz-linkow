@@ -33,5 +33,12 @@ class LinkManageController {
         return linkService.getLinksFromHigherThan(visits);
     }
 
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{id}")
+    LinkDto getLinksById(@PathVariable String id) {
+        return linkService.getLinkById(id);
+    }
+
 
 }
