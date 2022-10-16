@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 class LinkEntity {
 
     @Id
